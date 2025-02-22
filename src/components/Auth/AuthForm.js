@@ -8,12 +8,8 @@ const AuthForm = () => {
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
-  const submitHandler=(event)=>{
-    event.preventDefault();
-    const enteredEmail=emailInputRef.current.value;
-    const enteredPassword=passwordInputRef.current.value;
-  if(isLogin){
 
+<<<<<<< HEAD
   }else{
     fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={myAPIKey}',
     {
@@ -41,6 +37,8 @@ const AuthForm = () => {
   });
 }
   };
+=======
+>>>>>>> parent of d3406de (sign in is added)
   return (
     <section className={classes.auth}>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
