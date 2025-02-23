@@ -1,12 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState, useRef,useContext } from 'react';
 
 import classes from './AuthForm.module.css';
+import AuthContext from '../Store/AuthContext';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-
+const authCtx=useContext(AuthContext);
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -17,7 +18,7 @@ const submitHandler=(event)=>{
   const url = isLogin
       ? 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAMmgg2jojdiep3FIe6nkIf_3aS6B-xQgo' // Login API
       : 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAMmgg2jojdiep3FIe6nkIf_3aS6B-xQgo'; // Signup API
-    fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAMmgg2jojdiep3FIe6nkIf_3aS6B-xQgo',
+    fetch(url,
     {
       method: 'POST',
   headers: {
@@ -35,7 +36,7 @@ const submitHandler=(event)=>{
     throw new Error(data.error?.message || 'Authentication failed');
   }
   if(isLogin){
-    console.log('✅ Login successful! ID Token:', data.idToken);
+    authCtx.login(data.idToken);
     alert('✅ Login successful!');
   }else{
   alert('Signup successful! you can login now');
